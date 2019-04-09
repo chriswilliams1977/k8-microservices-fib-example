@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: postgres-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      component: postgres
+  template:
+    metadata:
+      labels:
+        component: postgres
+    spec:
+      #request to k8 that we need long term storage
+      #either on local machine or cloud GCP = persistent disk
+      #that meets requirements specified in the claim
+      #this just gets PV for use, needs to be assigned to pods in template
+      volumes: 
+        - name: postgres-storage
+          persistentVolumeClaim: 
+            #meet these requirements
+            #accessMode ReadWriteOnce with 2GB of storage
+            claimName: database-persistent-volume-claim
+      containers:
+        - name: postgres
+          image: postgres
+          ports:
+              #default port for Postgres
+            - containerPort: 5432
+          env:
+              #if PG see env of PGPASSWORD it overrides default password
+            - name: PGPASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: pgpassword
+                  key: PGPASSWORD
+          #now we have access to the storage 
+          #now state how it will be used
+          volumeMounts:
+            #array because we can have multiple mounts per container
+            #find storage we just asked k8 for
+            - name: postgres-storage
+              #states path on container that maps to volume storage
+              #in this case default data path where postgres stores data on harddrive
+              mountPath: var/lib/postgresql/data
+              #stores data inside a sub dir on PV called postgres
+              subPath: postgres

@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: database-persistent-volume-claim
+spec:
+  #if you create a PV
+  #K8 has to find storage intance that supports this mode
+  #Read write by single node
+  accessModes: 
+    - ReadWriteOnce
+  resources:
+    requests:
+      #find a storage option  that has 2GB of space
+      #can be statically provisioned (set up ahead of time)
+      #or dynamically provisioned
+      storage: 2Gi
