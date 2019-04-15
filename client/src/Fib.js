@@ -25,19 +25,26 @@ class Fib extends Component {
     });
   }
 
+  //bound function
   handleSubmit = async event => {
+    //stops form submitting itself
     event.preventDefault();
 
     await axios.post('/api/values', {
       index: this.state.index
     });
+    //clear value of input
     this.setState({ index: '' });
   };
 
+  //data from Postgres
   renderSeenIndexes() {
+    //iterate over seenIndexes array and pull out a number
     return this.state.seenIndexes.map(({ number }) => number).join(', ');
   }
 
+  //data from Redis
+  //object with key/values pairs
   renderValues() {
     const entries = [];
 
@@ -52,6 +59,7 @@ class Fib extends Component {
     return entries;
   }
 
+  // {this.renderSeenIndexes()} add to line 77
   render() {
     return (
       <div>
