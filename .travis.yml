@@ -1,0 +1,55 @@
+sudo: required
+services:
+  - docker
+env:
+  global:
+    #create a global var inside Travis env from git sha for versioning
+    #can be accessed by deploy.sh
+    - SHA=$(git rev-parse head)
+    #disable google sdk cli prompts
+    - CLOUDSDK_CORE_DISABLE_PROMPTS=1
+before_install:
+  - openssl aes-256-cbc -K $encrypted_0c35eebf403c_key -iv $encrypted_0c35eebf403c_iv -in service-account.json.enc -out service-account.json -d
+  #install Google Cloud SDK on Travis CI instance
+  - curl https://sdk.cloud.google.com | bash > /dev/null;
+  #get default sdk install dir, applies path
+  - source @HOME/google-cloud-sdk/path.bash.inc
+  #install kubectl inside Travis env
+  - gcloud components update kubectl
+  #authorize sdk
+  #create SA with credentials in service-account.json to access cloud account
+  #allows programatic access to account
+  #credentials need to be secured - ecrypted file stored on Travis server
+  #run Travis CLI in a Ruby container to encrypt JSON SA file for upload to Travis
+  # docker run -it -v $(pwd):/app ruby:2.3 sh - run ruby container with pwd mapped to /app dir in container
+  #do ls you will see app volume map, cd into that and you will see files mapped from local
+  #gem install travis --no-document - installs travis on container
+  #type travis to check its installed
+  #travis login - login to travis
+  #copy json file over and rename 
+  #travis encrypt-file service-account.json -r chriswilliams1977/k8-microservices-fib-example - encrypt file with travis repo name
+  #add openssl line to travis file to before_install and delete sa json file
+  #exit
+  - gcloud auth activate-service-account --key-file service-account.json
+  #set project and zone and cluster
+  - gcloud config set project williamscj-gke-demos 
+  - gcloud config set compute/zone europe-west1-c
+  - gcloud container clusters get-credentials multi-cluster
+  #access docker service (set up above) and supply login details. Uses vars on travis project
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+  #build dev image for tests dependencies
+  - docker build -t chriswilliams1977/react-test -f ./client/Dockerfile.dev ./client
+
+script:
+  #run tests -- --coverage prevents watch mode and generate coverage report so Travis can get feedback on tests
+  - docker run chriswilliams1977/react-test npm run test -- --coverage
+
+deploy:
+  #you can make this vendor specific or use generic script
+  #here we use a script
+  provider: script
+  #run  basdh script called deploy.sh
+  script: bash ./deploy.sh
+  on: 
+    #only run script if we are working on branch master
+    branch: master
