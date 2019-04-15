@@ -13,7 +13,7 @@ before_install:
   #install Google Cloud SDK on Travis CI instance
   - curl https://sdk.cloud.google.com | bash > /dev/null;
   #get default sdk install dir, applies path
-  - source @HOME/google-cloud-sdk/path.bash.inc
+  - source $HOME/google-cloud-sdk/path.bash.inc
   #install kubectl inside Travis env
   - gcloud components update kubectl
   #authorize sdk
