@@ -9,12 +9,12 @@ docker tag chriswilliams1977/multi-client gcr.io/williamscj-gke-demos/multi-clie
 docker tag chriswilliams1977/multi-client gcr.io/williamscj-gke-demos/multi-server:$SHA
 docker tag chriswilliams1977/multi-client gcr.io/williamscj-gke-demos/multi-worker:$SHA
 
-docker push gcr.io/williamscj-gke-demos/multi-client:latest
-docker push gcr.io/williamscj-gke-demos/multi-server:latest
-docker push gcr.io/williamscj-gke-demos/multi-worker:latest
-docker push gcr.io/williamscj-gke-demos/multi-client:$SHA
-docker push gcr.io/williamscj-gke-demos/multi-server$SHA
-docker push gcr.io/williamscj-gke-demos/multi-worker$SHA
+gcloud docker push gcr.io/williamscj-gke-demos/multi-client:latest
+gcloud docker push gcr.io/williamscj-gke-demos/multi-server:latest
+gcloud docker push gcr.io/williamscj-gke-demos/multi-worker:latest
+gcloud docker push gcr.io/williamscj-gke-demos/multi-client:$SHA
+gcloud docker push gcr.io/williamscj-gke-demos/multi-server$SHA
+gcloud docker push gcr.io/williamscj-gke-demos/multi-worker$SHA
 
 kubectl apply -f k8s
 kubectl set image deployments/server-deployment server=gcr.io/williamscj-gke-demos/multi-server:$SHA
