@@ -31,6 +31,7 @@ before_install:
   #add openssl line to travis file to before_install and delete sa json file
   #exit
   - gcloud auth activate-service-account --key-file service-account.json
+  - docker login -u _json_key -p "$(cat service-account.json)" https://gcr.io
   #set project and zone and cluster
   - gcloud config set project williamscj-gke-demos 
   - gcloud config set compute/zone europe-west1-c
