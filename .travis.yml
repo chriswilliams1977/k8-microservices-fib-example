@@ -5,7 +5,7 @@ env:
   global:
     #create a global var inside Travis env from git sha for versioning
     #can be accessed by deploy.sh
-    - SHA=$(git rev-parse head)
+    - SHA=$(git rev-parse HEAD)
     #disable google sdk cli prompts
     - CLOUDSDK_CORE_DISABLE_PROMPTS=1
 before_install:
@@ -31,6 +31,8 @@ before_install:
   #add openssl line to travis file to before_install and delete sa json file
   #exit
   - gcloud auth activate-service-account --key-file service-account.json
+  #grant docker gcloud permissions
+  #register gcloud as the credential helper for all Google-supported Docker registries
   - gcloud auth configure-docker
   #set project and zone and cluster
   - gcloud config set project williamscj-gke-demos 
