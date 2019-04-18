@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
-import apparch from './app-arch.png';
 import './App.css';
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 import OtherPage from './OtherPage';
@@ -23,7 +22,7 @@ class App extends Component {
             <Route path="/otherpage" component={OtherPage} />
           </div>
           <div>
-            <img src={apparch} />
+            <img src="./app-arch.png" />
           </div>
         </div>
       </Router>
