@@ -21,9 +21,6 @@ class App extends Component {
             <Route exact path="/" component={Fib} />
             <Route path="/otherpage" component={OtherPage} />
           </div>
-          <div>
-            <img src="app-arch.png" />
-          </div>
         </div>
       </Router>
     );
