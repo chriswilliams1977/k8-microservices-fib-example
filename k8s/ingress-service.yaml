@@ -8,7 +8,8 @@ metadata:
     kubernetes.io/ingress.class: nginx
     #configures how our copy of nginx controller behaves
     #does rewrite to remove /api from path
-    nginx.ingress.kubernetes.io/rewrite-target: /
+    #check github.com/kubernetes/ingress-nginx/tree/master/docs/examples/rewrite to validate
+    nginx.ingress.kubernetes.io/rewrite-target: /$1
 spec:
   rules:
     - http:
@@ -16,11 +17,11 @@ spec:
           #2 paths with rules
           # first rule send / requests to client pods
           # second send /api/ requests to server pods
-          - path: /
+          - path: /?(.*)
             backend: 
               serviceName: client-cluster-ip-service
               servicePort: 3000 
-          - path: /api/
+          - path: /api/?(.*)
             backend:
               serviceName: server-cluster-ip-service
               servicePort: 5000

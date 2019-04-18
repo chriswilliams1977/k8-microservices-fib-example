@@ -5,6 +5,7 @@ env:
   global:
     #create a global var inside Travis env from git sha for versioning
     #can be accessed by deploy.sh
+    #make sure HEAD is capatalized
     - SHA=$(git rev-parse HEAD)
     #disable google sdk cli prompts
     - CLOUDSDK_CORE_DISABLE_PROMPTS=1
