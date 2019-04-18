@@ -22,7 +22,7 @@ class App extends Component {
             <Route path="/otherpage" component={OtherPage} />
           </div>
           <div>
-            <img src="./app-arch.png" />
+            <img src="app-arch.png" />
           </div>
         </div>
       </Router>
