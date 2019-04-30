@@ -1,6 +1,6 @@
 apiVersion: certmanager.k8s.io/v1alpha1
 kind: Certificate
-metaData:
+metadata:
   name: channel16-dev-tls
 spec:
   #states where to store the certificate after it has been obtained by cert manager
