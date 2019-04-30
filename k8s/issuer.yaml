@@ -1,4 +1,4 @@
-apiVersion: certmanager.k8s.io/alpha1
+apiVersion: certmanager.k8s.io/v1alpha1
 kind: ClusterIssuer
 metadata:
   name: letsencrypt-prod
@@ -6,6 +6,7 @@ spec:
   #link to letsencrypt api to manage cert validation
   acme:
     server: https://acme-v02.api.letsencrypt.org/directory
+    # Email address used for ACME registration
     email: 'chriswilliams1977@gmail.com'
     #not connected to k8 secret (part of cert)
     #used by letsencypt comms, key tied to letsencryot record
