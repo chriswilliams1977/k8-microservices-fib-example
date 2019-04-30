@@ -1,0 +1,27 @@
+apiVersion: certmanager.k8s.io/alpha1
+kind: Certificate
+metaData:
+  name: channel16-dev-tls
+spec:
+  #states where to store the certificate after it has been obtained by cert manager
+  #created automatically by cert manager when creating cert
+  secretName: channel16-dev
+  #issuer
+  issuerRef:
+    name: letsencrypt-prod
+    kind: ClusterIssuer
+  #put on cert to state url it is valid for
+  commonName: channel16.dev
+  #list of dns associatioed with cert 
+  #cert is good for these addresses
+  dnsNames:
+    - channel16.dev
+    - www.channel16.dev
+  acne:
+    config:
+      - http01: 
+          ingressClass: nginx
+        #domains that will be accessed during the verification process
+        domains:
+          - channel16.dev
+          - www.channel16.dev

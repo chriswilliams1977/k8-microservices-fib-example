@@ -1,0 +1,16 @@
+apiVersion: certmanager.k8s.io/alpha1
+kind: ClusterIssuer
+metadata:
+  name: letsencrypt-prod
+spec:
+  #link to letsencrypt api to manage cert validation
+  acme:
+    server: https://acme-v02.api.letsencrypt.org/directory
+    email: 'chriswilliams1977@gmail.com'
+    #not connected to k8 secret (part of cert)
+    #used by letsencypt comms, key tied to letsencryot record
+    #we never use it
+    privateKeySecretRef: 
+      name: letsencrypt-prod
+    #use letsencrypt http process
+    http01: {}
