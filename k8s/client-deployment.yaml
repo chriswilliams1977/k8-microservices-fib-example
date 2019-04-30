@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: client
-          image: gcr.io/williamscj-gke-demos/multi-client:v5
+          image: gcr.io/williamscj-gke-demos/multi-client
           ports:
             #port that maps to client image
             - containerPort: 3000

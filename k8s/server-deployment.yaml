@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: server
-          image: gcr.io/williamscj-gke-demos/multi-server:v1
+          image: gcr.io/williamscj-gke-demos/multi-server
           ports:
             - containerPort: 5000
           env:

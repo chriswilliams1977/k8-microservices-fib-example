@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: worker
-          image: gcr.io/williamscj-gke-demos/multi-worker:v1
+          image: gcr.io/williamscj-gke-demos/multi-worker
           #environment variables to configure worker
           env:
             - name: REDIS_HOST
