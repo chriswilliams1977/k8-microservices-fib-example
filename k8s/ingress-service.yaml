@@ -10,9 +10,38 @@ metadata:
     #does rewrite to remove /api from path
     #check github.com/kubernetes/ingress-nginx/tree/master/docs/examples/rewrite to validate
     nginx.ingress.kubernetes.io/rewrite-target: /$1
+    #informs ingress to use letsencrypt service cert
+    #expect cert from this issuer
+    certmanager.k8s.io/cluster-issuer: 'letsencrypt-prod'
+    #force users to use https traffic via nginx
+    nginx.ingress.kubernetes.io/ssl-redirect: 'true'
 spec:
+  tls:
+    #host domains to serve traffic
+    - hosts:
+        - channel16.dev
+        - www.channel16.dev
+      #secret that holds cert to allow https
+      secretName: channel16-dev 
   rules:
-    - http:
+    #apply these rules to this host
+    #www is not applied, need to copy host as per below
+    - host: channel16.dev
+      http:
+        paths: 
+          #2 paths with rules
+          # first rule send / requests to client pods
+          # second send /api/ requests to server pods
+          - path: /?(.*)
+            backend: 
+              serviceName: client-cluster-ip-service
+              servicePort: 3000 
+          - path: /api/?(.*)
+            backend:
+              serviceName: server-cluster-ip-service
+              servicePort: 5000
+    - host: www.channel16.dev
+      http:
         paths: 
           #2 paths with rules
           # first rule send / requests to client pods
