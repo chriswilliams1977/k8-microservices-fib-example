@@ -63,14 +63,7 @@ steps:
   - 'push'
   - 'gcr.io/$PROJECT_ID/multi-client-cb:latest'
 
-#set image 
-# - name: 'gcr.io/cloud-builders/kubectl'
-#   args: ['set', 'image', 'deployment/my-deployment', 'my-container=gcr.io/my-project/my-image']
-#   env:
-#   - 'CLOUDSDK_COMPUTE_ZONE=us-east4-b'
-#   - 'CLOUDSDK_CONTAINER_CLUSTER=my-cluster'
-
-# my-image is pushed to Container Registry
+# multi-client-cb is pushed to Container Registry
 images:
 - 'gcr.io/$PROJECT_ID/multi-client-cb:$REVISION_ID'
 - 'gcr.io/$PROJECT_ID/multi-client-cb:latest'
@@ -82,3 +75,21 @@ images:
 #   args: ['bash', './deploy.sh']
 #   env:
 #   - 'SHA=$(git rev-parse HEAD)'
+
+#apply k8 manifests 
+name: 'gcr.io/cloud-builders/kubectl'
+  args: 
+  - 'apply'
+  - '-f'
+  - 'k8s'
+
+#set image 
+name: 'gcr.io/cloud-builders/kubectl'
+  args: 
+  - 'set'
+  - 'image'
+  - 'deployments/client-deployment'
+  - 'client=gcr.io/williamscj-gke-demos/multi-client-cb:$REVISION_ID'
+#   env:
+#   - 'CLOUDSDK_COMPUTE_ZONE=us-east4-b'
+#   - 'CLOUDSDK_CONTAINER_CLUSTER=my-cluster'
