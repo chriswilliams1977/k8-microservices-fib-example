@@ -78,8 +78,8 @@ steps:
   - 'deployments/client-deployment'
   - 'client=gcr.io/williamscj-gke-demos/multi-client-cb:$REVISION_ID'
   env:
-   - 'CLOUDSDK_COMPUTE_ZONE=europe-west1-c'
-   - 'CLOUDSDK_CONTAINER_CLUSTER=williamscj-gke-demos'
+  - 'CLOUDSDK_COMPUTE_ZONE=europe-west1-c'
+  - 'CLOUDSDK_CONTAINER_CLUSTER=williamscj-gke-demos'
 
 # multi-client-cb is pushed to Container Registry
 images:
