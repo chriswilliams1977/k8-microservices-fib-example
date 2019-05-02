@@ -1,0 +1,33 @@
+steps:
+#add any number of build steps to your build config file by including 
+#additional name fields and pointing them to cloud builders (gcr.io/cloud-builders/) example docker builder.
+
+# Uses the docker builder (container image running docker) to build an image called my-image
+#The args field of a step takes a list of arguments and passes them to the builder referenced by the name field.
+#the command name (build)
+#Docker tag (t)
+#the name of the image to be built (gcr.io/my-project/my-image)
+#the location of the source code (., meaning that the source code is present at the current working directory).
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['build', '-t', 'gcr.io/$PROJECT_ID/multi-client-cb', './client']
+#push image
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['push', 'gcr.io/my-project/multi-client-cb']
+#set image 
+# - name: 'gcr.io/cloud-builders/kubectl'
+#   args: ['set', 'image', 'deployment/my-deployment', 'my-container=gcr.io/my-project/my-image']
+#   env:
+#   - 'CLOUDSDK_COMPUTE_ZONE=us-east4-b'
+#   - 'CLOUDSDK_CONTAINER_CLUSTER=my-cluster'
+
+# my-image is pushed to Container Registry
+images:
+- 'gcr.io/$PROJECT_ID/multi-client-cb'
+
+# Uses the ubuntu build step:
+# to run a shell script; and
+# set env variables for its execution
+# - name: 'ubuntu'
+#   args: ['bash', './deploy.sh']
+#   env:
+#   - 'SHA=$(git rev-parse HEAD)'
