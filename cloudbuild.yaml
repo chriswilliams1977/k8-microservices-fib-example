@@ -63,19 +63,6 @@ steps:
   - 'push'
   - 'gcr.io/$PROJECT_ID/multi-client-cb:latest'
 
-# multi-client-cb is pushed to Container Registry
-images:
-- 'gcr.io/$PROJECT_ID/multi-client-cb:$REVISION_ID'
-- 'gcr.io/$PROJECT_ID/multi-client-cb:latest'
-
-# Uses the ubuntu build step:
-# to run a shell script; and
-# set env variables for its execution
-# - name: 'ubuntu'
-#   args: ['bash', './deploy.sh']
-#   env:
-#   - 'SHA=$(git rev-parse HEAD)'
-
 #apply k8 manifests 
 - name: 'gcr.io/cloud-builders/kubectl'
   args: 
@@ -93,3 +80,16 @@ images:
 #   env:
 #   - 'CLOUDSDK_COMPUTE_ZONE=us-east4-b'
 #   - 'CLOUDSDK_CONTAINER_CLUSTER=my-cluster'
+
+# multi-client-cb is pushed to Container Registry
+images:
+- 'gcr.io/$PROJECT_ID/multi-client-cb:$REVISION_ID'
+- 'gcr.io/$PROJECT_ID/multi-client-cb:latest'
+
+# Uses the ubuntu build step:
+# to run a shell script; and
+# set env variables for its execution
+# - name: 'ubuntu'
+#   args: ['bash', './deploy.sh']
+#   env:
+#   - 'SHA=$(git rev-parse HEAD)'
