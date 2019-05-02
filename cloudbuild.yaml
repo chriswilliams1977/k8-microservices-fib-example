@@ -24,6 +24,7 @@ steps:
   - 'npm'
   - 'run'
   - 'test'
+  - '--'
   - '--coverage'
 
 # Uses the docker builder (container image running docker) to build an image called my-image
