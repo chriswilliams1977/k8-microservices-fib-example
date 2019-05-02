@@ -77,7 +77,7 @@ steps:
   - 'image'
   - 'deployments/client-deployment'
   - 'client=gcr.io/williamscj-gke-demos/multi-client-cb:$REVISION_ID'
-   env:
+  env:
    - 'CLOUDSDK_COMPUTE_ZONE=europe-west1-b'
    - 'CLOUDSDK_CONTAINER_CLUSTER=williamscj-gke-demos'
 
