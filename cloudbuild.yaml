@@ -71,7 +71,7 @@ steps:
   - 'k8s'
   env:
   - 'CLOUDSDK_COMPUTE_ZONE=europe-west1-c'
-  - 'CLOUDSDK_CONTAINER_CLUSTER=williamscj-gke-demos'
+  - 'CLOUDSDK_CONTAINER_CLUSTER=multi-cluster'
 
 #set image 
 - name: 'gcr.io/cloud-builders/kubectl'
@@ -82,7 +82,7 @@ steps:
   - 'client=gcr.io/williamscj-gke-demos/multi-client-cb:$REVISION_ID'
   env:
   - 'CLOUDSDK_COMPUTE_ZONE=europe-west1-c'
-  - 'CLOUDSDK_CONTAINER_CLUSTER=williamscj-gke-demos'
+  - 'CLOUDSDK_CONTAINER_CLUSTER=multi-cluster'
 
 # multi-client-cb is pushed to Container Registry
 images:
